@@ -1,12 +1,21 @@
 package br.com.cautiousinvention.CautiousInvention.model;
 
-import jakarta.annotation.Nonnull;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+@Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "usuarios")
 public class Usuario implements Serializable {
@@ -14,11 +23,11 @@ public class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Integer id;
 
     private String nome;
 
-    @Nonnull
     private String email;
 
     private String senha;
@@ -31,78 +40,12 @@ public class Usuario implements Serializable {
 
     private Double altura;
 
-    @OneToMany(mappedBy = "usuario")
-    private List<Treino> treinos = new ArrayList<>();
 
-    public Integer getId() {
-        return id;
-    }
+    @OneToMany(mappedBy = "usuario"
+//            , cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.EAGER
+//    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    )
+    private Set<Treino> treinos = new HashSet<Treino>();
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public Integer getIdade() {
-        return idade;
-    }
-
-    public void setIdade(Integer idade) {
-        this.idade = idade;
-    }
-
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-
-    public Double getPeso() {
-        return peso;
-    }
-
-    public void setPeso(Double peso) {
-        this.peso = peso;
-    }
-
-    public Double getAltura() {
-        return altura;
-    }
-
-    public void setAltura(Double altura) {
-        this.altura = altura;
-    }
-
-    public List<Treino> getTreinos() {
-        return treinos;
-    }
-
-    public void setTreinos(List<Treino> treinos) {
-        this.treinos = treinos;
-    }
 }

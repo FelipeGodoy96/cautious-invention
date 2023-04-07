@@ -5,6 +5,7 @@ import br.com.cautiousinvention.CautiousInvention.model.exception.BadRequestExce
 import br.com.cautiousinvention.CautiousInvention.model.exception.ResourceNotFoundException;
 import br.com.cautiousinvention.CautiousInvention.repository.UsuarioRepository;
 import br.com.cautiousinvention.CautiousInvention.shared.UsuarioDTO;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Transactional
     public List<UsuarioDTO> obterTodosUsuarios() {
         List<Usuario> usuarios = usuarioRepository.findAll();
         return usuarios.stream().map(usuario -> new ModelMapper().map(usuario, UsuarioDTO.class)).collect(Collectors.toList());
