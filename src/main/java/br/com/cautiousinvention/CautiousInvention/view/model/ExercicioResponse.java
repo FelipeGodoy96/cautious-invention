@@ -9,14 +9,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-public class ExercicioRequest implements Serializable {
+public class ExercicioResponse implements Serializable {
 
     private static final Long serialVersionUID = 1L;
+
+    private Integer id;
 
     private String nome;
     private String descricao;
     private String grupo_muscular;
     private Treino treino;
     private Set<Serie> series = new HashSet<>();
-
 }

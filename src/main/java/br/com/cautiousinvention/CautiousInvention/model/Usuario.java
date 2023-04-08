@@ -17,7 +17,7 @@ import java.util.Set;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "usuarios")
+@Table(name = "usuarios", uniqueConstraints = { @UniqueConstraint(columnNames = "email")})
 public class Usuario implements Serializable {
     private static final Long serialVersionUID = 1L;
 
@@ -45,7 +45,7 @@ public class Usuario implements Serializable {
 //            , cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.EAGER
 //    @OnDelete(action = OnDeleteAction.NO_ACTION)
     )
-    private Set<Treino> treinos = new HashSet<Treino>();
+    private Set<Treino> treinos = new HashSet<>();
 
 
 }

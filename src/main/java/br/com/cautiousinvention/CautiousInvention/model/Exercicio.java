@@ -2,6 +2,7 @@ package br.com.cautiousinvention.CautiousInvention.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -29,15 +30,21 @@ public class Exercicio implements Serializable {
 
     private String grupo_muscular;
 
-    @JsonIdentityInfo(
-            generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id")
-    @JsonIdentityReference(alwaysAsId=true)
+//    @JsonIdentityInfo(
+//            generator = ObjectIdGenerators.PropertyGenerator.class,
+//            property = "id")
+//    @JsonIdentityReference(alwaysAsId=true)
+//    @JoinColumn(name = "exercicio_id")
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "exercicio_id")
     private Treino treino;
 
-    @OneToMany
+    // remover -- possível many to many
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "exercicios_series",
+        joinColumns = @JoinColumn(name = "exercicio_id"),
+        inverseJoinColumns = @JoinColumn(name = "serie_id")
+    )
     private Set<Serie> series = new HashSet<>();
 
 }
