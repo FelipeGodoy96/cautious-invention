@@ -1,9 +1,7 @@
 package br.com.cautiousinvention.CautiousInvention.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,15 +29,18 @@ public class Treino implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String descricao;
 
-    @JsonIdentityInfo(
-            generator = ObjectIdGenerators.PropertyGenerator.class,
-            property = "id")
-    @JsonIdentityReference(alwaysAsId=true)
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
 
-    @OneToMany(mappedBy = "treino")
+//    @JsonDeserialize
+//    @JsonIdentityInfo(
+//            generator = ObjectIdGenerators.PropertyGenerator.class,
+//            property = "id")
+//    @JsonIdentityReference(alwaysAsId=true)
+
+//    @ManyToOne(cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "usuario_id")
+//    private Usuario usuario;
+
+    @OneToMany
     private Set<Exercicio> exercicios = new HashSet<>();
 
 

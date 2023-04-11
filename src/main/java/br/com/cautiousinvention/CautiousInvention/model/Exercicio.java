@@ -40,7 +40,7 @@ public class Exercicio implements Serializable {
     private Treino treino;
 
     // remover -- possível many to many
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(name = "exercicios_series",
         joinColumns = @JoinColumn(name = "exercicio_id"),
         inverseJoinColumns = @JoinColumn(name = "serie_id")

@@ -1,8 +1,10 @@
 package br.com.cautiousinvention.CautiousInvention.service;
 
+import br.com.cautiousinvention.CautiousInvention.model.Treino;
 import br.com.cautiousinvention.CautiousInvention.model.Usuario;
 import br.com.cautiousinvention.CautiousInvention.model.exception.BadRequestException;
 import br.com.cautiousinvention.CautiousInvention.model.exception.ResourceNotFoundException;
+import br.com.cautiousinvention.CautiousInvention.repository.TreinoRepository;
 import br.com.cautiousinvention.CautiousInvention.repository.UsuarioRepository;
 import br.com.cautiousinvention.CautiousInvention.shared.UsuarioDTO;
 import jakarta.transaction.Transactional;
@@ -10,8 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,6 +20,8 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private TreinoRepository treinoRepository;
 
     @Transactional
     public List<UsuarioDTO> obterTodosUsuarios() {
@@ -37,9 +40,27 @@ public class UsuarioService {
 
     public UsuarioDTO criarUsuario(UsuarioDTO usuarioDto) {
         usuarioDto.setId(null); // Limpa ID para garantir cadastro de novo usuário.
-        Usuario usuario = new ModelMapper().map(usuarioDto, Usuario.class);
+        Usuario usuario = new Usuario();
+        usuario.setNome(usuarioDto.getNome());
+        usuario.setEmail(usuarioDto.getEmail());
+        usuario.setSenha(usuarioDto.getSenha());
+        usuario.setIdade(usuarioDto.getIdade());
+        usuario.setSexo(usuarioDto.getSexo());
+        usuario.setPeso(usuarioDto.getPeso());
+        usuario.setAltura(usuarioDto.getAltura());
+        Set <Treino> localizados = new HashSet<>(treinoRepository.findAllById(usuarioDto.getTreinos_id()));
+        if (localizados.isEmpty()) {
+            throw new BadRequestException("Nenhum treino com os IDs informados foi encontrado.");
+        }
+        usuario.setTreinos(localizados);
         usuario = usuarioRepository.save(usuario);
-        return new ModelMapper().map(usuario, UsuarioDTO.class);
+
+        // o retorno tem que ser um DTO, realizar processo inverso.
+        Set<Integer> treinosRetornados = new HashSet<>();
+        usuario.getTreinos().stream().map(treino -> treinosRetornados.add(treino.getId()));
+        UsuarioDTO usuarioRetornado = new ModelMapper().map(usuario, UsuarioDTO.class);
+        usuarioRetornado.setTreinos_id(treinosRetornados);
+        return usuarioRetornado;
     }
 
     public void deletarUsuario(Integer id) {
@@ -59,4 +80,6 @@ public class UsuarioService {
         Usuario usuarioAtualizado = usuarioRepository.save(usuario);
         return new ModelMapper().map(usuarioAtualizado, UsuarioDTO.class);
     }
+
+//    private void mapearDtoParaEntidade(UsuarioDTO usuarioDto, )
 }

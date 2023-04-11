@@ -1,14 +1,8 @@
 package br.com.cautiousinvention.CautiousInvention.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -41,10 +35,11 @@ public class Usuario implements Serializable {
     private Double altura;
 
 
-    @OneToMany(mappedBy = "usuario"
-//            , cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.EAGER
-//    @OnDelete(action = OnDeleteAction.NO_ACTION)
-    )
+//    @OneToMany(mappedBy = "usuario"
+////            , cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.EAGER
+////    @OnDelete(action = OnDeleteAction.NO_ACTION)
+//    )
+    @OneToMany
     private Set<Treino> treinos = new HashSet<>();
 
 

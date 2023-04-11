@@ -32,6 +32,8 @@ public class UsuarioController {
     public ResponseEntity<UsuarioResponse> cadastrarUsuario(@RequestBody UsuarioRequest usuarioReq) {
         UsuarioDTO usuarioDto = new ModelMapper().map(usuarioReq, UsuarioDTO.class);
         usuarioDto = usuarioService.criarUsuario(usuarioDto);
+
+        // talvez será necessário usar um construtor de UsuarioResponse passando o usuarioDto, invés de modelmapper.
         UsuarioResponse resposta = new ModelMapper().map(usuarioDto, UsuarioResponse.class);
         return new ResponseEntity<>(resposta, HttpStatus.CREATED);
     }

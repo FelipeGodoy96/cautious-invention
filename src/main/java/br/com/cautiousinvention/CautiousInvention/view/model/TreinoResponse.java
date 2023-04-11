@@ -18,7 +18,7 @@ public class TreinoResponse implements Serializable {
 
     private String descricao;
 
-    private Usuario usuario;
+//    private Usuario usuario;
 
     private Set<Exercicio> exercicios = new HashSet<>();
 

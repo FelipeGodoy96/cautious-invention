@@ -5,7 +5,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 public class UsuarioResponse implements Serializable {
@@ -18,6 +20,6 @@ public class UsuarioResponse implements Serializable {
     private String sexo;
     private Double peso;
     private Double altura;
-    private List<Treino> treinos = new ArrayList<>();
+    private Set<Treino> treinos = new HashSet<>();
 
 }
