@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -48,10 +49,18 @@ public class UsuarioService {
         usuario.setSexo(usuarioDto.getSexo());
         usuario.setPeso(usuarioDto.getPeso());
         usuario.setAltura(usuarioDto.getAltura());
-        Set <Treino> localizados = new HashSet<>(treinoRepository.findAllById(usuarioDto.getTreinos_id()));
+        Set <Treino> localizados = new HashSet<>();
+//        usuarioDto.getTreinos_id().stream().forEach(element -> localizados.add(element));
+        System.out.println(treinoRepository.getReferenceById(1));
+        usuarioDto.getTreinos_id().stream().forEach(id -> {
+            if (treinoRepository.existsById(id)) {
+                localizados.add(treinoRepository.getReferenceById(id));
+            }
+        });
         if (localizados.isEmpty()) {
             throw new BadRequestException("Nenhum treino com os IDs informados foi encontrado.");
         }
+        System.out.println(localizados);
         usuario.setTreinos(localizados);
         usuario = usuarioRepository.save(usuario);
 
