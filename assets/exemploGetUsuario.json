@@ -1,0 +1,88 @@
+ {
+    "id": 1,
+    "nome":"lorem",
+    "email":"email@example.com",
+    "senha":"ipsum",
+    "idade":26,
+    "sexo":"masculino",
+    "peso":84.50,
+    "altura":1.76,
+    "treinos": [
+        {
+            "id": 1,
+            "nome":"A",
+            "descricao":"bíceps e tríceps",
+            "exercicios": [
+                {
+                    "id": 1,
+                    "nome": "rosca direta",
+                    "descricao": "barra ou polia",
+                    "grupo": "bíceps"
+                },
+                {
+                    "id": 2,
+                    "nome": "rosca spyder",
+                    "descricao": "inclinado ou scott",
+                    "grupo": "bíceps"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "nome":"B",
+            "descricao":"peitoral",
+            "exercicios": [
+                {
+                    "id": 11,
+                    "nome": "supino reto",
+                    "descricao": "barra ou halter",
+                    "grupo": "peitoral"
+                },
+                {
+                    "id": 12,
+                    "nome": "supino declinado",
+                    "descricao": "peitoral inferior",
+                    "grupo": "peitoral"
+                }
+            ]
+        }
+    ],
+    "sessoes": [
+        {
+            "id": 1,
+            "treino_id": 1,
+            "exercicios": [
+                {
+                    "id": 1,
+                    "series": [
+                        {
+                            "id": 1,
+                            "repeticoes": 10,
+                            "carga": 40
+                        },
+                        {
+                            "id": 2,
+                            "repeticoes": 7,
+                            "carga": 45
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "series": [
+                        {
+                            "id": 3,
+                            "repeticoes": 6,
+                            "carga": 15
+                        },
+                        {
+                            "id": 4,
+                            "repeticoes": 8,
+                            "carga": 10
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

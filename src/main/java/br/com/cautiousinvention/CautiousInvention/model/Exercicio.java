@@ -35,9 +35,9 @@ public class Exercicio implements Serializable {
 //            property = "id")
 //    @JsonIdentityReference(alwaysAsId=true)
 //    @JoinColumn(name = "exercicio_id")
-    @JsonIgnore
-    @ManyToOne
-    private Treino treino;
+//    @JsonIgnore
+//    @ManyToOne
+//    private Treino treino;
 
     // remover -- possível many to many
     @ManyToMany
