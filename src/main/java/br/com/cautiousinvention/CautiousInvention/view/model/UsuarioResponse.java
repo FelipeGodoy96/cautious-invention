@@ -1,5 +1,6 @@
 package br.com.cautiousinvention.CautiousInvention.view.model;
 
+import br.com.cautiousinvention.CautiousInvention.model.Treino;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -17,6 +18,6 @@ public class UsuarioResponse implements Serializable {
     private String sexo;
     private Double peso;
     private Double altura;
-    private Set<Integer> treinos_id = new HashSet<>();
+    private Set<Treino> treinos = new HashSet<>();
 
 }

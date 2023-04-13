@@ -1,5 +1,9 @@
 package br.com.cautiousinvention.CautiousInvention.view.controller;
 
+import br.com.cautiousinvention.CautiousInvention.model.Treino;
+import br.com.cautiousinvention.CautiousInvention.model.exception.BadRequestException;
+import br.com.cautiousinvention.CautiousInvention.model.exception.ResourceNotFoundException;
+import br.com.cautiousinvention.CautiousInvention.repository.TreinoRepository;
 import br.com.cautiousinvention.CautiousInvention.service.UsuarioService;
 import br.com.cautiousinvention.CautiousInvention.shared.UsuarioDTO;
 import br.com.cautiousinvention.CautiousInvention.view.model.UsuarioRequest;
@@ -10,8 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -20,6 +26,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private TreinoRepository treinoRepository;
 
     @GetMapping
     public ResponseEntity<List<UsuarioResponse>> obterUsuarios() {
@@ -30,11 +39,13 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<UsuarioResponse> cadastrarUsuario(@RequestBody UsuarioRequest usuarioReq) {
-        UsuarioDTO usuarioDto = new ModelMapper().map(usuarioReq, UsuarioDTO.class);
+        UsuarioDTO usuarioDto = new UsuarioDTO();
+        conversaoListaIdParaEntidade(usuarioDto, usuarioReq);
+        usuarioDto = new ModelMapper().map(usuarioReq, UsuarioDTO.class);
         usuarioDto = usuarioService.criarUsuario(usuarioDto);
-
-        // talvez será necessário usar um construtor de UsuarioResponse passando o usuarioDto, invés de modelmapper.
-        UsuarioResponse resposta = new ModelMapper().map(usuarioDto, UsuarioResponse.class);
+        UsuarioResponse resposta = new UsuarioResponse();
+//        conversaoListaEntidadeParaId(usuarioDto, resposta);
+        resposta = new ModelMapper().map(usuarioDto, UsuarioResponse.class);
         return new ResponseEntity<>(resposta, HttpStatus.CREATED);
     }
 
@@ -58,5 +69,31 @@ public class UsuarioController {
         UsuarioResponse resposta = new ModelMapper().map(usuarioDto, UsuarioResponse.class);
         return new ResponseEntity<>(resposta, HttpStatus.OK);
     }
+
+    public void conversaoListaIdParaEntidade (UsuarioDTO dto, UsuarioRequest req) {
+        Set<Treino> localizados = new HashSet<>();
+        req.getTreinos_id().stream().forEach(id -> {
+            if (treinoRepository.existsById(id)) {
+                localizados.add(treinoRepository.getReferenceById(id));
+            }
+        });
+        if (localizados.isEmpty()) {
+            throw new BadRequestException("Nenhum treino com os IDs informados foi encontrado.");
+        }
+        dto.setTreinos(localizados);
+    }
+
+//    private void conversaoListaEntidadeParaId(UsuarioDTO usuarioDto, UsuarioResponse resposta) {
+//        Set<Integer> treinos_id = new HashSet<>();
+//        System.out.println(usuarioDto.getTreinos());
+//        System.out.println(usuarioDto.getTreinos().stream().findFirst());
+//        usuarioDto.getTreinos().stream().forEach(treino -> {
+//            treinos_id.add(treino.getId());
+//        });
+//        if (treinos_id.isEmpty()) {
+//            throw new ResourceNotFoundException("Nenhum treino foi localizado.");
+//        }
+//        resposta.setTreinos_id(treinos_id);
+//    }
 
 }

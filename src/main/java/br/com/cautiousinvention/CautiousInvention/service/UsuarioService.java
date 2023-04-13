@@ -41,35 +41,9 @@ public class UsuarioService {
 
     public UsuarioDTO criarUsuario(UsuarioDTO usuarioDto) {
         usuarioDto.setId(null); // Limpa ID para garantir cadastro de novo usuário.
-        Usuario usuario = new Usuario();
-        usuario.setNome(usuarioDto.getNome());
-        usuario.setEmail(usuarioDto.getEmail());
-        usuario.setSenha(usuarioDto.getSenha());
-        usuario.setIdade(usuarioDto.getIdade());
-        usuario.setSexo(usuarioDto.getSexo());
-        usuario.setPeso(usuarioDto.getPeso());
-        usuario.setAltura(usuarioDto.getAltura());
-        Set <Treino> localizados = new HashSet<>();
-//        usuarioDto.getTreinos_id().stream().forEach(element -> localizados.add(element));
-        System.out.println(treinoRepository.getReferenceById(1));
-        usuarioDto.getTreinos_id().stream().forEach(id -> {
-            if (treinoRepository.existsById(id)) {
-                localizados.add(treinoRepository.getReferenceById(id));
-            }
-        });
-        if (localizados.isEmpty()) {
-            throw new BadRequestException("Nenhum treino com os IDs informados foi encontrado.");
-        }
-        System.out.println(localizados);
-        usuario.setTreinos(localizados);
+        Usuario usuario = new ModelMapper().map(usuarioDto, Usuario.class);
         usuario = usuarioRepository.save(usuario);
-
-        // o retorno tem que ser um DTO, realizar processo inverso.
-        Set<Integer> treinosRetornados = new HashSet<>();
-        usuario.getTreinos().stream().map(treino -> treinosRetornados.add(treino.getId()));
-        UsuarioDTO usuarioRetornado = new ModelMapper().map(usuario, UsuarioDTO.class);
-        usuarioRetornado.setTreinos_id(treinosRetornados);
-        return usuarioRetornado;
+        return new ModelMapper().map(usuario, UsuarioDTO.class);
     }
 
     public void deletarUsuario(Integer id) {

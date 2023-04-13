@@ -28,12 +28,12 @@ public class UsuarioDTO implements Serializable {
 
     private Double altura;
 
-    private Set<Integer> treinos_id = new HashSet<>();
+    private Set<Treino> treinos = new HashSet<>();
 
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(Integer id, String nome, String email, String senha, Integer idade, String sexo, Double peso, Double altura, Set<Integer> treinos_id) {
+    public UsuarioDTO(Integer id, String nome, String email, String senha, Integer idade, String sexo, Double peso, Double altura, Set<Treino> treinos) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -42,6 +42,6 @@ public class UsuarioDTO implements Serializable {
         this.sexo = sexo;
         this.peso = peso;
         this.altura = altura;
-        this.treinos_id = treinos_id;
+        this.treinos = treinos;
     }
 }
