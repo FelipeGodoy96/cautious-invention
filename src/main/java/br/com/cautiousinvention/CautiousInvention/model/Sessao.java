@@ -23,4 +23,7 @@ public class Sessao implements Serializable {
 
     private Treino treino;
 
+
+    // Usuario receberá essa propriedade em sua requisição GET.
+
 }
