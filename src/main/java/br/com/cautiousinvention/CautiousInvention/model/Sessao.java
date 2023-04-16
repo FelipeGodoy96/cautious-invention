@@ -25,5 +25,6 @@ public class Sessao implements Serializable {
 
 
     // Usuario receberá essa propriedade em sua requisição GET.
+    // É possível qe essa entidade receberá um clone de treino e exercicios
 
 }
