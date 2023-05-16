@@ -7,6 +7,7 @@ import br.com.cautiousinvention.CautiousInvention.model.exception.ResourceNotFou
 import br.com.cautiousinvention.CautiousInvention.repository.TreinoRepository;
 import br.com.cautiousinvention.CautiousInvention.repository.TreinoRepository;
 import br.com.cautiousinvention.CautiousInvention.shared.TreinoDTO;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,10 +36,16 @@ public class TreinoService {
         return Optional.of(dto);
     }
 
+    @Transactional
     public TreinoDTO criarTreino(TreinoDTO treinoDto) {
-        treinoDto.setId(null); // Limpa ID para garantir cadastro de novo treino.
         Treino treino = new ModelMapper().map(treinoDto, Treino.class);
-        treino = treinoRepository.save(treino);
+        Optional<Treino> treinoBuscado = treinoRepository.findById(treinoDto.getId());
+        if (treinoBuscado.isPresent()) {
+            treino = treinoRepository.save(treino);
+        }
+        else {
+            throw new ResourceNotFoundException("Não é possível associar um treino inexistente.");
+        }
         return new ModelMapper().map(treino, TreinoDTO.class);
     }
 

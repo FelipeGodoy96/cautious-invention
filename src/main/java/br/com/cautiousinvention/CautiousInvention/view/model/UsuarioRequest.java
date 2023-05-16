@@ -1,5 +1,6 @@
 package br.com.cautiousinvention.CautiousInvention.view.model;
 
+import br.com.cautiousinvention.CautiousInvention.model.Treino;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -18,9 +19,9 @@ public class UsuarioRequest implements Serializable {
     private Double altura;
 
     // Posso passar um array vazio na criação de um usuário.
-    private Set<Integer> treinos_id = new HashSet<>();
+    private Set<Treino> treinos = new HashSet<>();
 
-    public UsuarioRequest(String nome, String email, String senha, Integer idade, String sexo, Double peso, Double altura, Set<Integer> treinos_id) {
+    public UsuarioRequest(String nome, String email, String senha, Integer idade, String sexo, Double peso, Double altura, Set<Treino> treinos) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -28,6 +29,6 @@ public class UsuarioRequest implements Serializable {
         this.sexo = sexo;
         this.peso = peso;
         this.altura = altura;
-        this.treinos_id = treinos_id;
+        this.treinos = treinos;
     }
 }

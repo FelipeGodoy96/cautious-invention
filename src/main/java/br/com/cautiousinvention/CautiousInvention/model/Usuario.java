@@ -39,8 +39,11 @@ public class Usuario implements Serializable {
 ////            , cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.EAGER
 ////    @OnDelete(action = OnDeleteAction.NO_ACTION)
 //    )
-    @OneToMany
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Treino> treinos = new HashSet<>();
+
+//    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private Set<Sessao> sessoes;
 
 
 }

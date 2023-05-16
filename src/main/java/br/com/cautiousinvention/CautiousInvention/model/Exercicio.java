@@ -28,7 +28,7 @@ public class Exercicio implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String descricao;
 
-    private String grupo_muscular;
+    private String grupo;
 
 //    @JsonIdentityInfo(
 //            generator = ObjectIdGenerators.PropertyGenerator.class,

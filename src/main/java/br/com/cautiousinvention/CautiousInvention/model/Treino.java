@@ -36,12 +36,14 @@ public class Treino implements Serializable {
 //            property = "id")
 //    @JsonIdentityReference(alwaysAsId=true)
 
-//    @ManyToOne(cascade = CascadeType.PERSIST)
-//    @JoinColumn(name = "usuario_id")
-//    private Usuario usuario;
+//    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
-    @OneToMany
-    private Set<Exercicio> exercicios = new HashSet<>();
+    @OneToMany(mappedBy = "treino", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Exercicio> exercicios;
 
-
+    public Treino(int id) {
+        this.id = id;
+    }
 }

@@ -39,9 +39,9 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<UsuarioResponse> cadastrarUsuario(@RequestBody UsuarioRequest usuarioReq) {
-        UsuarioDTO usuarioDto = new UsuarioDTO();
-        conversaoListaIdParaEntidade(usuarioDto, usuarioReq);
-        usuarioDto = new ModelMapper().map(usuarioReq, UsuarioDTO.class);
+//        UsuarioDTO usuarioDto = new UsuarioDTO();
+//        conversaoListaIdParaEntidade(usuarioDto, usuarioReq);
+        UsuarioDTO usuarioDto = new ModelMapper().map(usuarioReq, UsuarioDTO.class);
         usuarioDto = usuarioService.criarUsuario(usuarioDto);
         UsuarioResponse resposta = new UsuarioResponse();
 //        conversaoListaEntidadeParaId(usuarioDto, resposta);
@@ -70,18 +70,18 @@ public class UsuarioController {
         return new ResponseEntity<>(resposta, HttpStatus.OK);
     }
 
-    public void conversaoListaIdParaEntidade (UsuarioDTO dto, UsuarioRequest req) {
-        Set<Treino> localizados = new HashSet<>();
-        req.getTreinos_id().stream().forEach(id -> {
-            if (treinoRepository.existsById(id)) {
-                localizados.add(treinoRepository.getReferenceById(id));
-            }
-        });
-        if (localizados.isEmpty()) {
-            throw new BadRequestException("Nenhum treino com os IDs informados foi encontrado.");
-        }
-        dto.setTreinos(localizados);
-    }
+//    public void conversaoListaIdParaEntidade (UsuarioDTO dto, UsuarioRequest req) {
+//        Set<Treino> localizados = new HashSet<>();
+//        req.getTreinos_id().stream().forEach(id -> {
+//            if (treinoRepository.existsById(id)) {
+//                localizados.add(treinoRepository.getReferenceById(id));
+//            }
+//        });
+//        if (localizados.isEmpty()) {
+//            throw new BadRequestException("Nenhum treino com os IDs informados foi encontrado.");
+//        }
+//        dto.setTreinos(localizados);
+//    }
 
 //    private void conversaoListaEntidadeParaId(UsuarioDTO usuarioDto, UsuarioResponse resposta) {
 //        Set<Integer> treinos_id = new HashSet<>();
