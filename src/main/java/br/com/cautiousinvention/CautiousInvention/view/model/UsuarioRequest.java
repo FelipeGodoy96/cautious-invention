@@ -31,4 +31,8 @@ public class UsuarioRequest implements Serializable {
         this.altura = altura;
         this.treinos = treinos;
     }
+
+    public UsuarioRequest() {
+    }
+
 }

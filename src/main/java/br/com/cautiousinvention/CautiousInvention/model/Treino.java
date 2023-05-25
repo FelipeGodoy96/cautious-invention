@@ -1,27 +1,27 @@
 package br.com.cautiousinvention.CautiousInvention.model;
 
-import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import java.io.Serializable;
-import java.util.HashSet;
-
+import java.util.Objects;
 import java.util.Set;
 
-@Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Builder
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "treinos")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Treino implements Serializable {
 
     private static final Long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
     private Integer id;
 
     private String nome;
@@ -37,13 +37,24 @@ public class Treino implements Serializable {
 //    @JsonIdentityReference(alwaysAsId=true)
 
 //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+//    @JoinColumn(name = "usuario_id")
+//    private Usuario usuario;
 
-    @OneToMany(mappedBy = "treino", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "treino_id")
     private Set<Exercicio> exercicios;
 
-    public Treino(int id) {
-        this.id = id;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Treino treino = (Treino) o;
+        return getId() != null && Objects.equals(getId(), treino.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

@@ -12,7 +12,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLOutput;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -64,5 +63,4 @@ public class UsuarioService {
         return new ModelMapper().map(usuarioAtualizado, UsuarioDTO.class);
     }
 
-//    private void mapearDtoParaEntidade(UsuarioDTO usuarioDto, )
 }

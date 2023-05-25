@@ -28,7 +28,7 @@ public class UsuarioDTO implements Serializable {
 
     private Double altura;
 
-    private Set<Treino> treinos = new HashSet<>();
+    private Set<Treino> treinos;
 
     public UsuarioDTO() {
     }

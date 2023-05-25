@@ -1,26 +1,26 @@
 package br.com.cautiousinvention.CautiousInvention.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
-@Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "exercicios")
 public class Exercicio implements Serializable {
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
     private Integer id;
 
     private String nome;
@@ -30,21 +30,17 @@ public class Exercicio implements Serializable {
 
     private String grupo;
 
-//    @JsonIdentityInfo(
-//            generator = ObjectIdGenerators.PropertyGenerator.class,
-//            property = "id")
-//    @JsonIdentityReference(alwaysAsId=true)
-//    @JoinColumn(name = "exercicio_id")
-//    @JsonIgnore
-//    @ManyToOne
-//    private Treino treino;
 
-    // remover -- possível many to many
-    @ManyToMany
-    @JoinTable(name = "exercicios_series",
-        joinColumns = @JoinColumn(name = "exercicio_id"),
-        inverseJoinColumns = @JoinColumn(name = "serie_id")
-    )
-    private Set<Serie> series = new HashSet<>();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Exercicio exercicio = (Exercicio) o;
+        return getId() != null && Objects.equals(getId(), exercicio.getId());
+    }
 
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

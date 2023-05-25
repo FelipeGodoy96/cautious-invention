@@ -1,14 +1,17 @@
 package br.com.cautiousinvention.CautiousInvention.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
-@Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "sessoes")
 public class Sessao implements Serializable {
@@ -16,15 +19,29 @@ public class Sessao implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
     private Integer id;
 
     private Date data;
 
+    @ManyToOne
+    @JoinColumn(name = "treino_id")
     private Treino treino;
 
 
-    // Usuario receberá essa propriedade em sua requisição GET.
-    // É possível qe essa entidade receberá um clone de treino e exercicios
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "sessao_id")
+    private Usuario usuario;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Sessao sessao = (Sessao) o;
+        return getId() != null && Objects.equals(getId(), sessao.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

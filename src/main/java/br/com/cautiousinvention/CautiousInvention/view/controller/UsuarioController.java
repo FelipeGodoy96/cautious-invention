@@ -1,8 +1,5 @@
 package br.com.cautiousinvention.CautiousInvention.view.controller;
 
-import br.com.cautiousinvention.CautiousInvention.model.Treino;
-import br.com.cautiousinvention.CautiousInvention.model.exception.BadRequestException;
-import br.com.cautiousinvention.CautiousInvention.model.exception.ResourceNotFoundException;
 import br.com.cautiousinvention.CautiousInvention.repository.TreinoRepository;
 import br.com.cautiousinvention.CautiousInvention.service.UsuarioService;
 import br.com.cautiousinvention.CautiousInvention.shared.UsuarioDTO;
@@ -14,10 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -43,9 +38,7 @@ public class UsuarioController {
 //        conversaoListaIdParaEntidade(usuarioDto, usuarioReq);
         UsuarioDTO usuarioDto = new ModelMapper().map(usuarioReq, UsuarioDTO.class);
         usuarioDto = usuarioService.criarUsuario(usuarioDto);
-        UsuarioResponse resposta = new UsuarioResponse();
-//        conversaoListaEntidadeParaId(usuarioDto, resposta);
-        resposta = new ModelMapper().map(usuarioDto, UsuarioResponse.class);
+        UsuarioResponse resposta = new ModelMapper().map(usuarioDto, UsuarioResponse.class);
         return new ResponseEntity<>(resposta, HttpStatus.CREATED);
     }
 
