@@ -53,7 +53,6 @@ public class SessaoService {
         }
         sessaoDto.setId(id);
         Sessao sessao = new ModelMapper().map(sessaoDto, Sessao.class);
-        sessaoRepository.deleteById(id);
         Sessao sessaoAtualizado = sessaoRepository.save(sessao);
         return new ModelMapper().map(sessaoAtualizado, SessaoDTO.class);
     }

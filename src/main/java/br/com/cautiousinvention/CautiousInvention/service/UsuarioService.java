@@ -58,7 +58,6 @@ public class UsuarioService {
         }
         usuarioDto.setId(id);
         Usuario usuario = new ModelMapper().map(usuarioDto, Usuario.class);
-        usuarioRepository.deleteById(id);
         Usuario usuarioAtualizado = usuarioRepository.save(usuario);
         return new ModelMapper().map(usuarioAtualizado, UsuarioDTO.class);
     }

@@ -53,7 +53,6 @@ public class ExercicioService {
         }
         exercicioDto.setId(id);
         Exercicio exercicio = new ModelMapper().map(exercicioDto, Exercicio.class);
-        exercicioRepository.deleteById(id);
         Exercicio exercicioAtualizado = exercicioRepository.save(exercicio);
         return new ModelMapper().map(exercicioAtualizado, ExercicioDTO.class);
     }

@@ -62,7 +62,6 @@ public class TreinoService {
         }
         treinoDto.setId(id);
         Treino treino = new ModelMapper().map(treinoDto, Treino.class);
-        treinoRepository.deleteById(id);
         Treino treinoAtualizado = treinoRepository.save(treino);
         return new ModelMapper().map(treinoAtualizado, TreinoDTO.class);
     }

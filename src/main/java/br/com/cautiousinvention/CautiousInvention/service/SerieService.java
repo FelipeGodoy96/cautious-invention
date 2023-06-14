@@ -53,7 +53,6 @@ public class SerieService {
         }
         serieDto.setId(id);
         Serie serie = new ModelMapper().map(serieDto, Serie.class);
-        serieRepository.deleteById(id);
         Serie serieAtualizado = serieRepository.save(serie);
         return new ModelMapper().map(serieAtualizado, SerieDTO.class);
     }

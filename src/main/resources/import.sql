@@ -3,3 +3,4 @@ INSERT INTO treinos (nome, descricao) VALUES ('A', 'Bíceps e Tríceps')
 INSERT INTO exercicios (nome, descricao, grupo) VALUES ('Rosca Direta', 'Rosca Scott ou Spyder', 'biceps')
 
 
+
